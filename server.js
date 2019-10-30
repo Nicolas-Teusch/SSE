@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use("/", lvl3Routes);
 
 app.get('/evalInput', function (req, res) {
-		const command = 'ping ';
+		const command = 'ping -c 4 ';
 		const regexpFromatHTML = /\n/gi;
 		const regexpNoCheat = /server/gi;
 		const queryParam = req.query.userIp;
@@ -23,7 +23,9 @@ app.get('/evalInput', function (req, res) {
 		if(queryParam.match(regexpNoCheat))
 			res.send('You should not Cheat!');
 		else
-			cp.exec(command + queryParam, (_err, stdout, _stderr) => {	
+			cp.exec(command + queryParam, (_err, stdout, _stderr) => {
+				console.log(_err);
+					
 				const response = stdout.replace(regexpFromatHTML, "<br>");
 				res.send(response);
 			});   

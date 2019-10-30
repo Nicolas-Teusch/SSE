@@ -57,7 +57,7 @@ const cp = require('child_process');
       res.send('You should not Cheat!');
     else {
       const command = 'echo ' + filecontent + ' > ' + fpath;
-      cp.exec(command, (err, stdout, _stderr) => {
+      cp.exec(command, (err, _stdout, _stderr) => {
         console.log(err);
         
         if (err) res.send('mmhh shit irgendwas ist schief gegangen');
