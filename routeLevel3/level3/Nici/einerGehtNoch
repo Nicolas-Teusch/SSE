@@ -1,0 +1,26 @@
+ Volume in drive C has no label.
+ Volume Serial Number is 7E53-69D7
+
+ Directory of C:\Users\Nicolas\Documents\workspace\SSE
+
+30.10.2019  10:08    <DIR>          .
+30.10.2019  10:08    <DIR>          ..
+29.10.2019  09:06               748 commands
+28.10.2019  18:24                 0 file.txt
+30.10.2019  09:28                 0 fpath
+30.10.2019  10:16               226 hash.js
+29.10.2019  16:18             4.333 index.html
+29.10.2019  16:46             4.333 level1.html
+29.10.2019  16:50             4.219 level2.html
+30.10.2019  09:28    <DIR>          level3
+30.10.2019  09:18             8.385 level3.html
+29.10.2019  19:28    <DIR>          node_modules
+28.10.2019  17:13            14.478 package-lock.json
+29.10.2019  19:28               342 package.json
+30.10.2019  10:11    <DIR>          routeLevel3
+30.10.2019  10:13             3.014 server.js
+29.10.2019  18:43               867 style.css
+29.10.2019  19:51               106 test.http
+29.10.2019  16:21                66 tisisafuckingFlaaaag
+              14 File(s)         41.117 bytes
+               5 Dir(s)  115.459.260.416 bytes free

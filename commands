@@ -1,0 +1,18 @@
+127.0.0.1 & type NUL > file.txt & dir
+
+Challange 2 oder 3 
+
+GockelDoks
+
+1. Man muss seinen nutzernamen eingeben
+2. Dort wird ein Verzeichnis für den Nutzer erstellt
+3. Mann kommt auf einen Seite mit einem Leeren "Dokuemnt", wo man oben den Titel eingeben kann
+4. Das Dokuement hat einen Body
+5. Der Spieler soll über die Eingabe des Namensfeldes der Datei die OS code injection machen, durch die
+er sich mit type dir > dateiname das aktuelle Verzeichnis in die Datei laden soll und dann die datei erneut anfordern
+In der datei sollte dann eine Verzeichnisauflistung stehen. Nun kann er erneut den Inhalt der Flagge in sein eigenens
+Dokument schreiben: Dokuemnttitel & type flag > Dokuemnttitel
+
+Aufgabe 1)
+
+get System information
