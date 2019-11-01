@@ -39,24 +39,39 @@
             };
         }
 
+        function sendPingIfEnter(event) {
+            let key = event.which || event.keyCode;
+            if(key == 13) {
+                doCoolStuff();
+            }
+        }
+
+        function sendFlagIfEnter(event) {
+            let key = event.which || event.keyCode;
+            if(key == 13) {
+                submitFlag();
+            }
+        }
+
         function doCoolStuff() {
             startProcessing('loaderSyscall')
             const xhttp = new XMLHttpRequest();
             const userIp = document.getElementById('ipInput').value;
-            const request = "/evalInput?userIp=" + encodeURIComponent(userIp);
+            const request = "/evalInputLvl1?userIp=" + encodeURIComponent(userIp);
             xhttp.open("GET", request, true);
             xhttp.send();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                   stopProcessing('loaderSyscall','systemcall', this.responseText);
+                    console.log(this.response);
+                    stopProcessing('loaderSyscall','systemcall', this.responseText);
                 }
             };
         }
-    </script>
 
+    
+    </script>
     <div class="container">
-        Die erste Flagge ist eine Kombination aus dem aktuellen Nutzernamen, unterdem der Server läuft<br>
-        und der Windowsversion {Nutzername/Windowsversion}.<br>
+        Die erste Flagge ist eine Umgebungsvariable des Servers.<br>
         Nutze verschiedene OS-Calls um diese Informationen zu erlagen.<br>
         Zur Hilfe findet Ihr unter der Aufgabe eine kleine Tabelle.<br>
         Viel Erfolg!
@@ -64,12 +79,13 @@
     <div class="container">
         <div id="loaderSyscall">
         </div>
-        <form class="input_form">
-            Enter your friends IP:<br>
-            <input type="text" id="ipInput"value="127.0.0.1"></input><br>
+        <div class="input_form">
+            Du wolltest schon immer mal wissen welcher IP sich hinter einer DNS-Hostnamen befindet?<br>
+            Finde es doch hier und jetzt heraus!<br>
+            <input type="text" id="ipInput" value="www.google.de" onkeypress="sendPingIfEnter(event)"></input><br>
             <br>
             <input type="button" id="submit" value="submit" onclick="doCoolStuff()">
-        </form>
+        </div>
         
         <div id="systemcall">
         </div>
@@ -77,12 +93,12 @@
     <div class="container">
         <div id="loaderFlag">
         </div>
-        <form class="input_form">
+        <div class="input_form">
             Submit your Flag!:<br>
-            <input type="text" id="flagInput" value=""></input><br>
+            <input type="text" id="flagInput" value="" onkeypress="sendFlagIfEnter(event)"></input><br>
             <br>
-            <input type="button" id="submit" value="submit" onclick="submitFlag()">
-        </form>
+            <input type="submit" id="submit" value="submit" onclick="submitFlag()">
+        </div>
         
         <div id="flagSubRes">       
         </div>
@@ -112,6 +128,9 @@
             </tr>
             <tr>
                 <td>lesen einer Datei</td><td>cat</td><td>type</td>
+            </tr>
+            <tr>
+                <td>auflisten von Umgebungsvariablen</td><td>printenv</td><td>SET</td>
             </tr>
         </table>
     </div>

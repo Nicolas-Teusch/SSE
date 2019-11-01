@@ -54,26 +54,24 @@
             xhttp.send(JSON.stringify(data));
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                   stopProcessing('loaderSyscall','systemcall', this.responseText);
+                    const res = JSON.parse(this.responseText);
+                    console.log(res);
+                    
+                    stopProcessing('loaderSyscall','systemcall', res.data);
+                    if(!res.err) {
+                        sendLogin(true);
+                        loadFile(fname);
+                    }
                 }
             };
         }
 
-        function loadDocument(which) {
-            startProcessing('loaderSyscall')
-            const xhttp = new XMLHttpRequest();
-            const uname = document.getElementById('username').value;
-            const request = "/level3/" + encodeURIComponent(username) + "/" + encodeURIComponent(which);
-            xhttp.open("GET", request, true);
-            xhttp.send();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                   stopProcessing('loaderSyscall','systemcall', this.responseText);
-                   const resJSON = JSON.parse(this.responseText);
-                   document.getElementById('filename').value = fname;
-                   document.getElementById('content').value = fcontent
-                }
-            };
+        function updateFileList(data) {
+            const files = document.getElementById('file_list');
+            files.innerHTML = "";
+            data.forEach(elem => {
+                files.innerHTML += "<li onclick=loadFile(\"" + elem + "\")>" + elem + "</li>";
+            })
         }
 
         function sendLogin() {
@@ -88,21 +86,30 @@
             xhttp.send(JSON.stringify(data));
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
+                    let res = JSON.parse(this.responseText);
+                    if(res.err) return stopProcessing('loaderSyscall','systemcall', res.data);
                     stopProcessing('loaderSyscall','systemcall', "");
-                    const files = document.getElementById('file_list');
-                   
-                    let res = this.responseText;
-                    res = res.replace(/[\"\[\]]/g, "");
-                    res = res.split(",");
+                    updateFileList(res.data);
                     
-                    files.innerHTML = "";
-                    res.forEach(elem => {
-                        files.innerHTML += "<li onclick=loadFile(\"" + elem + "\")>" + elem + "</li>";
-                    })
                 }
             };
         }
 
+
+
+        function sendLoginIfEnter(event) {
+            let key = event.which || event.keyCode;
+            if(key == 13) {
+                sendLogin();
+            }
+        }
+
+        function sendFlagIfEnter(event) {
+            let key = event.which || event.keyCode;
+            if(key == 13) {
+                submitFlag();
+            }
+        }
         function loadFile(filename) {
             startProcessing('loaderSyscall')
             const xhttp = new XMLHttpRequest();
@@ -114,8 +121,6 @@
             xhttp.send(JSON.stringify(data));
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
-                    
                     const resJSON = JSON.parse(this.responseText);
                     stopProcessing('loaderSyscall','systemcall', resJSON.info);
                     if(resJSON.info === 'Datei erfolgreich geladen!') {
@@ -141,9 +146,9 @@
     <div class="container">
         <div id="loaderSyscall">
         </div>
-        <form class="input_form">
+        <div class="input_form">
             Dein Nutzername:<br>
-            <input type="text" id="username" value="">
+            <input type="text" id="username" value="" onkeypress="sendLoginIfEnter(event)">
             <input type="button" id="login" value="login" onclick="sendLogin()"><br>
             <hr>
             Der Dateiname:<br>
@@ -153,13 +158,12 @@
                 Hey booooii willkommen zu GockelDoks der beste Texteditor aller Zeiten.
             </textarea>
             <br>
-            <input type="button" id="save" value="save" onclick="saveDoc()">
-        </form>
+            <input type="submit" id="save" value="save" onclick="saveDoc()">
+        </div>
         <div id="files">
             <br>
             Deine Dateien:<br>
             <ul id="file_list">
-                <li>eine datei</li>
             </ul>
         </div>
         
@@ -169,12 +173,12 @@
     <div class="container">
         <div id="loaderFlag">
         </div>
-        <form class="input_form">
+        <div class="input_form">
             Submit your Flag!:<br>
-            <input type="text" id="flagInput" value=""></input><br>
+            <input type="text" id="flagInput" value="" onkeypress="sendFlagIfEnter(event)"></input><br>
             <br>
             <input type="button" id="submit" value="submit" onclick="submitFlag()">
-        </form>
+        </div>
         
         <div id="flagSubRes">       
         </div>
@@ -204,6 +208,9 @@
             </tr>
             <tr>
                 <td>lesen einer Datei</td><td>cat</td><td>type</td>
+            </tr>
+            <tr>
+                <td>auflisten von Umgebungsvariablen</td><td>printenv</td><td>SET</td>
             </tr>
         </table>
     </div>

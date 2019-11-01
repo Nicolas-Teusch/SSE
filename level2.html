@@ -39,6 +39,20 @@
             };
         }
 
+
+        function sendPingIfEnter(event) {
+            let key = event.which || event.keyCode;
+            if(key == 13) {
+                doCoolStuff();
+            }
+        }
+
+        function sendFlagIfEnter(event) {
+            let key = event.which || event.keyCode;
+            if(key == 13) {
+                submitFlag();
+            }
+        }
         function doCoolStuff() {
             startProcessing('loaderSyscall')
             const xhttp = new XMLHttpRequest();
@@ -63,12 +77,12 @@
     <div class="container">
         <div id="loaderSyscall">
         </div>
-        <form class="input_form">
+        <div class="input_form">
             Enter your friends IP:<br>
-            <input type="text" id="ipInput"value="127.0.0.1"></input><br>
+            <input type="text" id="ipInput"value="127.0.0.1" onkeypress="sendPingIfEnter(event)"></input><br>
             <br>
             <input type="button" id="submit" value="submit" onclick="doCoolStuff()">
-        </form>
+        </div>
         
         <div id="systemcall">
         </div>
@@ -76,12 +90,12 @@
     <div class="container">
         <div id="loaderFlag">
         </div>
-        <form class="input_form">
+        <div class="input_form">
             Submit your Flag!:<br>
-            <input type="text" id="flagInput" value=""></input><br>
+            <input type="text" id="flagInput" value="" onkeypress="sendFlagIfEnter(event)"></input><br>
             <br>
             <input type="button" id="submit" value="submit" onclick="submitFlag()">
-        </form>
+        </div>
         
         <div id="flagSubRes">       
         </div>
@@ -111,6 +125,9 @@
             </tr>
             <tr>
                 <td>lesen einer Datei</td><td>cat</td><td>type</td>
+            </tr>
+            <tr>
+                <td>auflisten von Umgebungsvariablen</td><td>printenv</td><td>SET</td>
             </tr>
         </table>
     </div>
